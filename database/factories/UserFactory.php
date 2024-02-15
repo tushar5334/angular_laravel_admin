@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'user_type' => 'SuperAdmin',
             //'user_type' => $userType[array_rand($userType)],
             'password' => 'password', // password
+
             //'status' => $status[array_rand($status)],
             'status' => 1,
             'token' => Str::random(10),
