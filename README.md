@@ -1,4 +1,4 @@
-# Quick Start - Project With Laravel 9.x and AdminLTE 3
+# Quick Start - Admin Area With Angular 13 and Laravel 9.x
 
 ### Step by step
 
