@@ -1,0 +1,220 @@
+<div
+  class="container"
+  fxLayout="row"
+  fxLayout.xs="column"
+  fxLayoutAlign="center center"
+>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <mat-card class="register-card">
+      <mat-toolbar class="center">
+        <span>Material App</span>
+      </mat-toolbar>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label for="name">Enter your name</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            id="name"
+            formControlName="name"
+          />
+          <mat-icon matPrefix class="prefix"> account_box</mat-icon>
+          <mat-error *ngIf="submitted || registerFormControl['name'].invalid">
+            <div
+              *ngIf="
+                registerFormControl['name'].errors &&
+                registerFormControl['name'].errors['required']
+              "
+            >
+              Name is required
+            </div>
+            <div
+              *ngIf="
+                registerFormControl['name'].errors &&
+                registerFormControl['name'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["name"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="email">Enter your email</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="pat@example.com"
+            id="email"
+            formControlName="email"
+          />
+          <mat-icon matPrefix class="prefix"> email</mat-icon>
+          <!-- <mat-icon matSuffix> email</mat-icon> -->
+          <mat-error *ngIf="submitted || registerFormControl['email'].invalid">
+            <div
+              *ngIf="
+                registerFormControl['email'].errors &&
+                registerFormControl['email'].errors['required']
+              "
+            >
+              Email is required
+            </div>
+
+            <div
+              *ngIf="
+                registerFormControl['email'].errors &&
+                registerFormControl['email'].errors['email']
+              "
+            >
+              Enter valid email
+            </div>
+
+            <div
+              *ngIf="
+                registerFormControl['email'].errors &&
+                registerFormControl['email'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["email"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label for="password">Enter your password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder=""
+            id="password"
+            formControlName="password"
+          />
+          <mat-icon matPrefix class="prefix"> lock_outline</mat-icon>
+
+          <mat-error
+            *ngIf="submitted || registerFormControl['password'].invalid"
+            ><div
+              *ngIf="
+                registerFormControl['password'].errors &&
+                registerFormControl['password'].errors['required']
+              "
+            >
+              Password is required
+            </div>
+            <!-- <div
+              *ngIf="
+                registerFormControl['password'].errors &&
+                registerFormControl['password'].errors['minlength']
+              "
+            >
+              Password should be atleast 5 character
+            </div> -->
+            <div
+              *ngIf="
+                registerFormControl['password'].errors &&
+                registerFormControl['password'].errors['invalidPassword']
+              "
+              class="text-danger"
+            >
+              Password should have minimum 5 characters, at least 1 uppercase
+              letter, 1 lowercase letter and 1 number
+            </div>
+            <div
+              *ngIf="
+                registerFormControl['password'].errors &&
+                registerFormControl['password'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["password"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label for="password_confirmation"
+            >Enter your confirm password</mat-label
+          >
+          <input
+            matInput
+            type="password"
+            placeholder=""
+            id="password_confirmation"
+            formControlName="password_confirmation"
+          />
+          <mat-icon matPrefix class="prefix"> lock_outline</mat-icon>
+
+          <mat-error
+            *ngIf="
+              submitted || registerFormControl['password_confirmation'].invalid
+            "
+            ><div
+              *ngIf="
+                registerFormControl['password_confirmation'].errors &&
+                registerFormControl['password_confirmation'].errors['required']
+              "
+            >
+              Confirm password is required
+            </div>
+            <!-- <div
+              *ngIf="
+                registerFormControl['password_confirmation'].errors &&
+                registerFormControl['password_confirmation'].errors['minlength']
+              "
+            >
+              Confirm password should be atleast 5 character
+            </div> -->
+            <div
+              *ngIf="
+                registerFormControl['password_confirmation'].errors &&
+                registerFormControl['password_confirmation'].errors[
+                  'passwordMismatch'
+                ]
+              "
+              class="text-danger"
+            >
+              Confirm passwords mast be same as password
+            </div>
+            <div
+              *ngIf="
+                registerFormControl['password_confirmation'].errors &&
+                registerFormControl['password_confirmation'].errors[
+                  'invalidPassword'
+                ]
+              "
+              class="text-danger"
+            >
+              Confirm password should have minimum 5 characters, at least 1
+              uppercase letter, 1 lowercase letter and 1 number
+            </div>
+            <div
+              *ngIf="
+                registerFormControl['password_confirmation'].errors &&
+                registerFormControl['password_confirmation'].errors[
+                  'serverValidationError'
+                ]
+              "
+            >
+              {{ serverErrors["password_confirmation"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="registerForm.invalid"
+        >
+          Register
+        </button>
+      </mat-card-actions>
+      <mat-card-actions>
+        <a mat-button routerLink="/admin/login">I already have a membership</a>
+        <a mat-button routerLink="/admin/forgot-password"
+          >Forgot Your Password?</a
+        >
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

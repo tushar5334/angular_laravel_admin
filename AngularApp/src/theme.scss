@@ -1,0 +1,139 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+/* palette */
+
+/* $red-palette, $pink-palette, $indigo-palette,
+$purple-palette, $deep-purple-palette, $blue-palette, $light-blue-palette, $cyan-palette,
+$teal-palette, $green-palette, $light-green-palette, $lime-palette, $yellow-palette,
+$amber-palette, $orange-palette, $deep-orange-palette, $brown-palette, $grey-palette,
+$gray-palette, $blue-grey-palette, $blue-gray-palette, $light-theme-background-palette,
+$dark-theme-background-palette, $light-theme-foreground-palette, $dark-theme-foreground-palette; */
+
+/* $my-primary: mat.define-palette(mat.$indigo-palette, 500);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette(mat.$red-palette); */
+
+/* $my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+  )
+); */
+
+//deeppurple-amber light theme
+
+$deeppurple-light-primary: mat.define-palette(mat.$deep-purple-palette);
+$amber-light-accent: mat.define-palette(mat.$amber-palette);
+
+$deeppurple-amber-light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $deeppurple-light-primary,
+      accent: $amber-light-accent,
+    ),
+  )
+);
+
+//indigo-pink light theme
+
+$indigo-light-primary: mat.define-palette(mat.$indigo-palette);
+$pink-light-accent: mat.define-palette(mat.$pink-palette);
+
+$indigo-pink-light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $indigo-light-primary,
+      accent: $pink-light-accent,
+    ),
+  )
+);
+
+//pink-bluegray dark theme
+$pink-dark-primary: mat.define-palette(mat.$pink-palette);
+$blue-gray-dark-accent: mat.define-palette(mat.$blue-gray-palette);
+
+$pink-bluegray-dark-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $pink-dark-primary,
+      accent: $blue-gray-dark-accent,
+    ),
+  )
+);
+
+//purple-green dark theme
+$purple-dark-primary: mat.define-palette(mat.$purple-palette);
+$green-dark-accent: mat.define-palette(mat.$green-palette);
+
+$purple-green-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $purple-dark-primary,
+      accent: $green-dark-accent,
+    ),
+  )
+);
+
+// Define a light theme
+$light-primary: mat.define-palette(mat.$orange-palette, 900);
+$light-accent: mat.define-palette(mat.$gray-palette, 100);
+$light-warn: mat.define-palette(mat.$blue-palette, 900);
+
+$custom-light-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+      warn: $light-warn,
+    ),
+  )
+);
+
+// Define a dark theme
+$dark-primary: mat.define-palette(mat.$brown-palette, A100);
+$dark-accent: mat.define-palette(mat.$gray-palette, 500);
+
+$custom-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+    ),
+  )
+);
+
+.theme-deeppurple-amber-light {
+  height: 100%;
+  @include mat.all-component-themes($deeppurple-amber-light-theme);
+}
+
+.theme-indigo-pink-light {
+  height: 100%;
+  @include mat.all-component-themes($indigo-pink-light-theme);
+}
+
+.theme-pink-bluegray-dark {
+  height: 100%;
+  @include mat.all-component-themes($pink-bluegray-dark-theme);
+}
+
+.theme-purple-green-dark {
+  height: 100%;
+  @include mat.all-component-themes($purple-green-dark-theme);
+}
+
+.theme-custom-light {
+  height: 100%;
+  @include mat.all-component-themes($custom-light-theme);
+}
+
+.theme-custom-dark {
+  height: 100%;
+  @include mat.all-component-themes($custom-dark-theme);
+}

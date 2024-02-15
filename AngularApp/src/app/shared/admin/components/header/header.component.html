@@ -1,0 +1,50 @@
+<!--  -->
+<mat-toolbar color="primary" *ngIf="userIsAuthenticated">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="toggleSideBar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span> APP LOGO </span>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+      <ul fxLayout="row" fxLayoutGap="20px">
+        <!-- <li>
+          <button mat-icon-button>
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </li> -->
+        <li>
+          <button mat-icon-button [matMenuTriggerFor]="theme_menu">
+            <mat-icon>format_color_fill</mat-icon>
+          </button>
+          <mat-menu #theme_menu="matMenu">
+            <ng-container *ngFor="let theme of themeList; trackBy: trackByFn">
+              <button mat-menu-item (click)="onThemeChange(theme.themeclass)">
+                <!-- [color]="color" -->
+                <mat-radio-button [checked]="theme.isThemeActive">
+                  {{ theme.themeLabel }}
+                </mat-radio-button>
+              </button>
+            </ng-container>
+          </mat-menu>
+        </li>
+        <li>
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>person_outline</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <a mat-menu-item routerLink="/admin/edit-profile">
+              <mat-icon>account_circle</mat-icon>
+              Edit Profile
+            </a>
+            <button mat-menu-item (click)="onLogout()">
+              <mat-icon>exit_to_app</mat-icon>
+              Sign out
+            </button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

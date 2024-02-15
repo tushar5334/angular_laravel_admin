@@ -1,0 +1,322 @@
+<form [formGroup]="filterForm">
+  <div
+    class="container"
+    fxLayout="row wrap"
+    fxLayout.xs="column"
+    fxLayout.sm="column"
+    fxLayoutAlign="start"
+    fxLayoutGap="10px"
+  >
+    <div>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Search..."
+          formControlName="globalFilter"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="startDate"
+            placeholder="Start date"
+          />
+          <input matEndDate formControlName="endDate" placeholder="End date" />
+        </mat-date-range-input>
+        <!-- <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-error
+          *ngIf="
+            filterForm.controls['startDate'].hasError('matStartDateInvalid')
+          "
+          >Invalid start date</mat-error
+        >
+        <mat-error
+          *ngIf="filterForm.controls['endDate'].hasError('matEndDateInvalid')"
+          >Invalid end date</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div
+      fxLayout="row wrap"
+      fxLayout.xs="column"
+      fxLayout.sm="row"
+      fxLayoutAlign="start start"
+      fxLayoutGap="10px"
+    >
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          matTooltip="Search"
+          aria-label="Search"
+          (click)="onSearch()"
+        >
+          Search
+        </button>
+      </div>
+
+      <div>
+        <button
+          mat-raised-button
+          color="warn"
+          matTooltip="Reset"
+          aria-label="Reset"
+          (click)="onReset()"
+        >
+          Clear
+        </button>
+      </div>
+      <div>
+        <button
+          mat-raised-button
+          color="warn"
+          matTooltip="Delete"
+          aria-label="Delete"
+          (click)="onDeleteAll()"
+        >
+          Delete
+        </button>
+      </div>
+
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          matTooltip="Active"
+          aria-label="Active"
+          (click)="onUpdateStatusAll(1)"
+        >
+          Active
+        </button>
+      </div>
+      <div>
+        <button
+          mat-raised-button
+          matTooltip="Inactive"
+          aria-label="Inactive"
+          (click)="onUpdateStatusAll(0)"
+        >
+          Inactive
+        </button>
+      </div>
+
+      <div>
+        <button
+          mat-raised-button
+          color="accent"
+          matTooltip="Export to excel"
+          aria-label="Export to excel"
+          (click)="onExportAll()"
+        >
+          Export
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- <a [routerLink]="['/user/bob']" [queryParams]="{debug: true}" fragment="education">
+  link to user component
+</a>
+/user/bob?debug=true#education -->
+
+<div class="container" fxLayout="row" fxLayoutAlign="start">
+  <a
+    routerLink="/admin/users/add-user"
+    mat-raised-button
+    color="primary"
+    matTooltip="Add User"
+    aria-label="Add User"
+  >
+    Add User
+  </a>
+</div>
+<div class="mat-elevation-z8">
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="name"
+    matSortDirection="asc"
+    matSortDisableClear
+  >
+    <ng-container matColumnDef="selectAll">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          class="example-margin"
+          [checked]="allSelected"
+          [color]="'primary'"
+          [indeterminate]="someChecked()"
+          (change)="checkUncheckAll($event.checked)"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox
+          [(ngModel)]="element.is_selected"
+          [color]="'primary'"
+          (ngModelChange)="updateAllSelected()"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        {{ paginator.pageSize * paginator.pageIndex + i + 1 }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="display_picture">
+      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.display_picture != ''">
+          <img
+            [src]="element.display_picture"
+            [alt]="element.name"
+            mat-card-sm-image
+          />
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="user_type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>User Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.user_type }}</td>
+    </ng-container>
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+      <td mat-cell *matCellDef="let element">{{ element.created_at }}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-slide-toggle
+          [id]="'status_' + element.user_id"
+          class="example-margin"
+          [color]="'primary'"
+          [checked]="element.status"
+          [disabled]="false"
+          (change)="changeStatus($event, element.user_id)"
+        >
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          [matMenuTriggerData]="{ element: element }"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <!-- <div
+          class="container"
+          fxLayout="row"
+          fxLayout.xs="column"
+          fxLayoutAlign="left center"
+          fxLayoutGap="10px"
+        >
+          <div>
+            <mat-slide-toggle
+              [id]="'status_' + element.user_id"
+              class="example-margin"
+              [color]="'primary'"
+              [checked]="element.status"
+              [disabled]="false"
+              (change)="change_status_single_record($event, element.user_id)"
+            >
+            </mat-slide-toggle>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              color="primary"
+              aria-label="Edit"
+              (click)="ediSingleRecord(element.user_id)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              color="warn"
+              aria-label="Delete"
+              (click)="deleteSingleRecord(element.user_id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div> -->
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns; let i = index"
+    ></tr>
+  </table>
+  <!-- appStylePaginator -->
+  <mat-paginator
+    #paginator
+    appStylePaginator
+    [length]="totalRows"
+    [pageIndex]="currentPage"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    showFirstLastButtons
+    aria-label="Select page"
+  >
+  </mat-paginator>
+  <!-- (page)="pageChanged($event)" -->
+  <!-- <mat-paginator
+    stylePaginator
+    showFirstLastButtons
+    [showTotalPages]="3"
+    [length]="totalRows"
+    [pageSize]="3"
+    [pageSizeOptions]="[3, 5, 10, 20]"
+  >
+  </mat-paginator> -->
+</div>
+
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent let-aliasMenuItems="element">
+    <!-- <button mat-menu-item (click)="cl(aliasMenuItems)">
+      <mat-icon>dialpad</mat-icon>
+      <span>Redial</span>
+    </button> -->
+    <a
+      mat-menu-item
+      routerLink="/admin/users/edit-user/{{ aliasMenuItems.user_id }}"
+    >
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </a>
+
+    <button mat-menu-item (click)="openConfirmDialog(aliasMenuItems.user_id)">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

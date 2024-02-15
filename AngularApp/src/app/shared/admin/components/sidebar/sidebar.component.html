@@ -1,0 +1,53 @@
+<mat-nav-list class="side-navnar">
+  <div class="profile-card">
+    <div class="header">
+      <h2>{{ userData.name }}</h2>
+      <h4>{{ userData.email }}</h4>
+    </div>
+    <img [src]="userData.display_picture" [alt]="userData.name" />
+  </div>
+
+  <mat-divider></mat-divider>
+  <ng-container *ngFor="let menu of menuList; index as i">
+    <ng-container
+      [ngTemplateOutlet]="menu.children ? childMenu : parentMenu"
+      [ngTemplateOutletContext]="{ menu: menu }"
+    >
+    </ng-container>
+  </ng-container>
+</mat-nav-list>
+
+<ng-template #parentMenu let-menu="menu">
+  <!--  <mat-list-item
+    [routerLink]="menu.routerLink"
+    routerLinkActive="is-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  > -->
+  <mat-list-item
+    [routerLink]="menu.routerLink"
+    routerLinkActive="is-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <mat-icon>{{ menu.icon }}</mat-icon
+    >{{ menu.text }}
+  </mat-list-item>
+</ng-template>
+
+<ng-template #childMenu let-menu="menu">
+  <mat-expansion-panel [class.mat-elevation-z0]="true">
+    <mat-expansion-panel-header>
+      <mat-icon mat-list-icon>{{ menu.icon }}</mat-icon
+      >{{ menu.text }}
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+      <mat-list-item
+        [routerLink]="submenu.routerLink"
+        *ngFor="let submenu of menu.children; trackBy: trackByFn"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon>{{ submenu.icon }}</mat-icon> {{ submenu.text }}
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</ng-template>

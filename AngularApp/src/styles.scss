@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+//@import '~bootstrap/scss/bootstrap';
+//@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+//@import "@material-design-icons/font";
+
+// Material default theme
+//"./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+/* deeppurple-amber.css
+indigo-pink.css
+pink-bluegrey.css
+purple-green.css */
+
+//@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "theme.scss";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.center {
+  justify-content: center;
+}
+
+.mat-simple-snackbar {
+  font-size: 1.2em;
+  color: white;
+}
+
+.snackbar-error {
+  background-color: white;
+  background: #990505;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+.snackbar-success {
+  color: white;
+  background: hwb(120 12% 50%);
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+.snackbar-info {
+  color: white;
+  background: rgb(34, 34, 168);
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}

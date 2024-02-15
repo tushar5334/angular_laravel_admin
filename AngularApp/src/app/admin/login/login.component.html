@@ -1,0 +1,113 @@
+<div
+  class="container"
+  fxLayout="row"
+  fxLayout.xs="column"
+  fxLayoutAlign="center center"
+>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <mat-card class="login-card">
+      <mat-toolbar class="center">
+        <span>Material App</span>
+      </mat-toolbar>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label for="email">Enter your email</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="pat@example.com"
+            id="email"
+            name="email"
+            formControlName="email"
+          />
+          <mat-icon matPrefix class="prefix"> email</mat-icon>
+          <!-- <mat-icon matSuffix> email</mat-icon> -->
+          <mat-error *ngIf="submitted || loginFormControl['email'].invalid">
+            <div
+              *ngIf="
+                loginFormControl['email'].errors &&
+                loginFormControl['email'].errors['required']
+              "
+            >
+              Email is required
+            </div>
+
+            <div
+              *ngIf="
+                loginFormControl['email'].errors &&
+                loginFormControl['email'].errors['email']
+              "
+            >
+              Enter valid email
+            </div>
+
+            <div
+              *ngIf="
+                loginFormControl['email'].errors &&
+                loginFormControl['email'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["email"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="password">Enter your password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder=""
+            id="password"
+            name="password"
+            formControlName="password"
+          />
+          <mat-icon matPrefix class="prefix"> lock_outline</mat-icon>
+
+          <mat-error *ngIf="submitted || loginFormControl['password'].invalid"
+            ><div
+              *ngIf="
+                loginFormControl['password'].errors &&
+                loginFormControl['password'].errors['required']
+              "
+            >
+              Password is required
+            </div>
+            <div
+              *ngIf="
+                loginFormControl['password'].errors &&
+                loginFormControl['password'].errors['minlength']
+              "
+            >
+              Password should be atleast 5 character
+            </div>
+
+            <div
+              *ngIf="
+                loginFormControl['password'].errors &&
+                loginFormControl['password'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["password"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
+      </mat-card-actions>
+      <mat-card-actions>
+        <a mat-button routerLink="/admin/register">Register now</a>
+        <a mat-button routerLink="/admin/forgot-password"
+          >Forgot Your Password?</a
+        >
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

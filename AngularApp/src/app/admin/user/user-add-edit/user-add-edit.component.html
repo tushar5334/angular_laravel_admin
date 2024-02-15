@@ -1,0 +1,374 @@
+<form [formGroup]="userForm" (ngSubmit)="onSave()">
+  <mat-card class="register-card">
+    <mat-toolbar>
+      <span>{{ titleText }} User</span>
+    </mat-toolbar>
+    <mat-card-content>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayout.sm="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="20px"
+      >
+        <mat-form-field>
+          <mat-label for="name">Enter your name</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder=""
+            id="name"
+            formControlName="name"
+          />
+          <!-- userFormControl['name'].touched -->
+          <mat-error *ngIf="submitted || userFormControl['name'].invalid">
+            <div
+              *ngIf="
+                userFormControl['name'].errors &&
+                userFormControl['name'].errors['required']
+              "
+            >
+              Name is required
+            </div>
+            <div
+              *ngIf="
+                userFormControl['name'].errors &&
+                userFormControl['name'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["name"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label for="email">Enter your email</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="pat@example.com"
+            id="email"
+            formControlName="email"
+          />
+          <mat-error *ngIf="submitted || userFormControl['email'].invalid">
+            <div
+              *ngIf="
+                userFormControl['email'].errors &&
+                userFormControl['email'].errors['required']
+              "
+            >
+              Email is required
+            </div>
+
+            <div
+              *ngIf="
+                userFormControl['email'].errors &&
+                userFormControl['email'].errors['email']
+              "
+            >
+              Enter valid email
+            </div>
+            <div
+              *ngIf="
+                userFormControl['email'].errors &&
+                userFormControl['email'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["email"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayout.sm="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="20px"
+      >
+        <mat-form-field>
+          <mat-label for="password">Enter your password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder=""
+            id="password"
+            formControlName="password"
+          />
+
+          <mat-error *ngIf="submitted || userFormControl['password'].invalid"
+            ><div
+              *ngIf="
+                userFormControl['password'].errors &&
+                userFormControl['password'].errors['required']
+              "
+            >
+              Password is required
+            </div>
+            <!-- <div
+              *ngIf="
+                userFormControl['password'].errors &&
+                userFormControl['password'].errors['minlength']
+              "
+            >
+              Password should be atleast 5 character
+            </div> -->
+            <div
+              *ngIf="
+                userFormControl['password'].errors &&
+                userFormControl['password'].errors['invalidPassword']
+              "
+              class="text-danger"
+            >
+              Password should have minimum 5 characters, at least 1 uppercase
+              letter, 1 lowercase letter and 1 number
+            </div>
+            <div
+              *ngIf="
+                userFormControl['password'].errors &&
+                userFormControl['password'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["password"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="password_confirmation"
+            >Enter your confirm password</mat-label
+          >
+          <input
+            matInput
+            type="password"
+            placeholder=""
+            id="password_confirmation"
+            formControlName="password_confirmation"
+          />
+
+          <mat-error
+            *ngIf="
+              submitted || userFormControl['password_confirmation'].invalid
+            "
+            ><div
+              *ngIf="
+                userFormControl['password_confirmation'].errors &&
+                userFormControl['password_confirmation'].errors['required']
+              "
+            >
+              Confirm password is required
+            </div>
+            <!-- <div
+                *ngIf="
+                  userFormControl['password_confirmation'].errors &&
+                  userFormControl['password_confirmation'].errors['minlength']
+                "
+              >
+                Confirm password should be atleast 5 character
+              </div> -->
+            <div
+              *ngIf="
+                userFormControl['password_confirmation'].errors &&
+                userFormControl['password_confirmation'].errors[
+                  'passwordMismatch'
+                ]
+              "
+              class="text-danger"
+            >
+              Confirm passwords mast be same as password
+            </div>
+            <div
+              *ngIf="
+                userFormControl['password_confirmation'].errors &&
+                userFormControl['password_confirmation'].errors[
+                  'invalidPassword'
+                ]
+              "
+              class="text-danger"
+            >
+              Confirm password should have minimum 5 characters, at least 1
+              uppercase letter, 1 lowercase letter and 1 number
+            </div>
+            <div
+              *ngIf="
+                userFormControl['password_confirmation'].errors &&
+                userFormControl['password_confirmation'].errors[
+                  'serverValidationError'
+                ]
+              "
+            >
+              {{ serverErrors["password_confirmation"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayout.sm="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="20px"
+      >
+        <mat-form-field>
+          <mat-label for="user_type">User Type</mat-label>
+          <mat-select formControlName="user_type" name="user_type">
+            <mat-option [value]=""> Select User Type </mat-option>
+            <mat-option [value]="'Admin'"> Admin </mat-option>
+            <mat-option [value]="'User'"> User </mat-option>
+            <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{ food.viewValue }}
+            </mat-option> -->
+          </mat-select>
+          <mat-error *ngIf="submitted || userFormControl['user_type'].invalid">
+            <div
+              *ngIf="
+                userFormControl['user_type'].errors &&
+                userFormControl['user_type'].errors['required']
+              "
+            >
+              User type is required
+            </div>
+            <div
+              *ngIf="
+                userFormControl['user_type'].errors &&
+                userFormControl['user_type'].errors['serverValidationError']
+              "
+            >
+              {{ serverErrors["user_type"] }}
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <div class="toggle-btn-div">
+          <mat-slide-toggle
+            formControlName="status"
+            class="example-margin"
+            [color]="'primary'"
+          >
+            Status
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayout.sm="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="20px"
+      >
+        <div
+          class="dropzone"
+          fileDragDrop
+          (filesChangeEmiter)="onFileChange($event)"
+        >
+          <div class="text-wrapper">
+            <div class="centered">
+              <input
+                type="file"
+                name="file"
+                id="file"
+                accept="image/*"
+                (change)="onFileChange($event)"
+                [multiple]="false"
+              />
+              <!-- <mat-icon fontSet="material-icons-outlined">face</mat-icon
+                > -->
+              <label for="file"
+                ><span class="textLink">Select your file</span> or Drop it
+                here!</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayout.sm="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="20px"
+      >
+        <!-- <h3 mat-subheader>Files</h3> -->
+        <div
+          class="row fileItem"
+          *ngFor="let f of files; let ind = index; trackBy: trackByFn"
+        >
+          <div
+            class="col-sm-12 fileItemIconDiv"
+            (click)="openConfirmDialog(ind)"
+          >
+            <i class="fa-6x fileItemIcon"></i>
+          </div>
+          <div class="col-sm-12 fileItemText">
+            <span>{{ f.name }}</span>
+          </div>
+        </div>
+        <!--
+        <div>
+          <mat-list>
+            <h3 mat-subheader>Files</h3>
+            <mat-list-item *ngFor="let file of files">
+              <mat-icon mat-list-icon>folder</mat-icon>
+              <h4 mat-line>{{file.name}}</h4>
+              <button mat-raised-button color="warn" (click)="deleteFile(file)">Delete</button>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        -->
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayout.sm="column"
+        fxLayoutAlign="start"
+        *ngIf="display_picture"
+      >
+        <mat-card class="image-card">
+          <img
+            mat-card-lg-image
+            [src]="display_picture"
+            [alt]="'profile pic'"
+          />
+        </mat-card>
+      </div>
+    </mat-card-content>
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayout.sm="column"
+      fxLayoutAlign="start"
+      fxLayoutGap="20px"
+    >
+      <mat-card-actions>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="userForm.invalid"
+        >
+          {{ btnText }}
+        </button>
+      </mat-card-actions>
+      <mat-card-actions>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="onReset()"
+        >
+          Reset
+        </button>
+      </mat-card-actions>
+      <mat-card-actions>
+        <a
+          routerLink="/admin/users"
+          type="button"
+          mat-raised-button
+          color="warn"
+          >Back</a
+        >
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</form>
