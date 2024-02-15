@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'email' => 'admin@admin.com',
             'user_type' => 'SuperAdmin',
             //'user_type' => $userType[array_rand($userType)],
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => 'password', // password
             //'status' => $status[array_rand($status)],
             'status' => 1,
             'token' => Str::random(10),
