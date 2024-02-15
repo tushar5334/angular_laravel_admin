@@ -1,0 +1,6 @@
+
+   INFO  Processing jobs from the [default] queue.  
+
+  2022-08-26 10:17:15 App\Jobs\SendEmailJob .................. 5,407.88ms DONE
+  2022-08-26 10:17:32 App\Jobs\SendEmailJob .................. 1,891.93ms DONE
+  2022-08-26 10:20:22 App\Jobs\SendEmailJob .................. 9,900.48ms DONE

@@ -1,0 +1,143 @@
+Angular Commands
+
+>ng g module admin/user --routing
+Will generate m and routing module
+
+>ng g c admin/user/user-listing
+Will generate component
+
+>ng g s admin/services/user
+Will generate service
+
+
+Implement cypress for E2E testing
+
+> ng add @cypress/schematic
+
+> npx cypress open
+
+Angular PWA 
+
+    A PWA only runs on https and localhost environment. The Angular CLI is limited because the service worker doesn’t work with the ng serve command. You have to create a build and host it separately, perhaps using http-server
+
+    https://www.youtube.com/watch?v=93kMaqHgWYA
+
+
+    1. ng add @angular/pwa@13.2.2
+
+    2. angular.json file will be updated
+
+
+    From
+
+    "architect": {
+    ...
+
+    "assets": [
+    "src/favicon.ico",
+    "src/assets"
+    ],
+    ...
+
+    }
+
+    To
+
+    "architect": {
+    ...
+
+    "assets": [
+    "src/favicon.ico",
+    "src/assets",
+    "src/manifest.webmanifest"
+    ],
+
+    }
+
+
+
+    will add 
+
+    "serviceWorker": true,
+    "ngswConfigPath": "ngsw-config.json"
+
+    below 
+
+    "scripts": [],
+
+    From
+
+    "test": {
+    ...
+
+    "assets": [
+    "src/favicon.ico",
+    "src/assets"
+    ],
+    ...
+
+    }
+
+    To
+
+    "test": {
+    ...
+
+    "assets": [
+    "src/favicon.ico",
+    "src/assets",
+    "src/manifest.webmanifest"
+    ],
+
+    }
+
+    3. To see a PWA in action, follow the below steps.
+    > ng build
+    Open "http://127.0.0.1:8000/app/admin" in browser
+
+    4. Awesome, you can see that a PWA is running on http://127.0.0.1:8000/app/admin
+    Now open the developer console and navigate to Application > Service Workers. 
+    You can see there is a service worker file ngsw-worker.js installed for http://127.0.0.1:8000/app/admin
+
+Laravel commands
+
+Create migration for create user table
+
+>php artisan make:migration create_users_table
+
+Hashed Paasword: $2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
+
+Seed data from migration
+
+>php artisan tinker
+App\Models\Admin\User::factory()->count(51)->create();
+
+Create tables for queue/jobs
+
+>php artisan queue:table
+>php artisan migrate
+
+.env file:
+QUEUE_CONNECTION=database
+
+Execute command to run queue in background
+>php artisan queue:work
+
+Always run in background evenif terminal is closed
+>nohup php artisan queue:work --daemon &
+
+Export
+php artisan make:export Admin\UserReportExport --model=User
+
+Create job command
+>php artisan make:job SendEmailJob
+
+Create storage link
+>php artisan storage:link
+
+
+
+
+
+
+
