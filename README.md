@@ -5,7 +5,7 @@
 Clone this Repository
 
 ```sh
-git clone https://github.com/tushar5334/cms.git angular_laravel
+git clone https://github.com/tushar5334/angular_laravel_admin.git angular_laravel
 ```
 
 Create the .env file
